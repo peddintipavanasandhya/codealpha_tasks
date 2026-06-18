@@ -1,0 +1,47 @@
+fitness_data = []
+
+while True:
+    print("\n--- Fitness Tracker ---")
+    print("1. Add Fitness Record")
+    print("2. View Records")
+    print("3. Dashboard")
+    print("4. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        steps = int(input("Steps: "))
+        workout = input("Workout Type: ")
+        duration = int(input("Workout Duration (minutes): "))
+        calories = int(input("Calories Burned: "))
+
+        fitness_data.append({
+            "steps": steps,
+            "workout": workout,
+            "duration": duration,
+            "calories": calories
+        })
+
+        print("Record Added Successfully!")
+
+    elif choice == "2":
+        for i, record in enumerate(fitness_data, start=1):
+            print(f"\nRecord {i}")
+            print(record)
+
+    elif choice == "3":
+        total_steps = sum(r["steps"] for r in fitness_data)
+        total_calories = sum(r["calories"] for r in fitness_data)
+        total_duration = sum(r["duration"] for r in fitness_data)
+
+        print("\n--- Dashboard ---")
+        print("Total Steps:", total_steps)
+        print("Total Calories:", total_calories)
+        print("Total Workout Time:", total_duration, "minutes")
+
+    elif choice == "4":
+        print("Thank You!")
+        break
+
+    else:
+        print("Invalid Choice")
