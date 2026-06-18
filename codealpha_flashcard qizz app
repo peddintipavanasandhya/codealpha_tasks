@@ -1,0 +1,250 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcard Quiz App</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        width: 500px;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .flashcard {
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        min-height: 180px;
+        margin-bottom: 20px;
+    }
+
+    .question {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: #222;
+    }
+
+    .answer {
+        color: #28a745;
+        font-size: 1.1rem;
+        display: none;
+        margin-top: 15px;
+    }
+
+    button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+        color: white;
+    }
+
+    .show-btn {
+        background: #007bff;
+    }
+
+    .nav-btn {
+        background: #6c757d;
+    }
+
+    .add-btn {
+        background: #28a745;
+    }
+
+    .edit-btn {
+        background: #ffc107;
+        color: black;
+    }
+
+    .delete-btn {
+        background: #dc3545;
+    }
+
+    .controls {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Flashcard Quiz App</h1>
+
+    <div class="flashcard">
+        <div class="question" id="question"></div>
+
+        <button class="show-btn" onclick="toggleAnswer()">
+            Show Answer
+        </button>
+
+        <div class="answer" id="answer"></div>
+    </div>
+
+    <div class="controls">
+        <button class="nav-btn" onclick="previousCard()">Previous</button>
+        <button class="nav-btn" onclick="nextCard()">Next</button>
+    </div>
+
+    <div class="form-group">
+        <input type="text" id="newQuestion" placeholder="Enter question">
+    </div>
+
+    <div class="form-group">
+        <input type="text" id="newAnswer" placeholder="Enter answer">
+    </div>
+
+    <div class="controls">
+        <button class="add-btn" onclick="addCard()">Add</button>
+        <button class="edit-btn" onclick="editCard()">Edit</button>
+        <button class="delete-btn" onclick="deleteCard()">Delete</button>
+    </div>
+</div>
+
+<script>
+let flashcards = [
+    {
+        question: "What is the capital of France?",
+        answer: "Paris"
+    },
+    {
+        question: "What is 5 + 3?",
+        answer: "8"
+    },
+    {
+        question: "Who wrote Hamlet?",
+        answer: "William Shakespeare"
+    }
+];
+
+let currentIndex = 0;
+
+function displayCard() {
+    document.getElementById("question").textContent =
+        flashcards[currentIndex].question;
+
+    document.getElementById("answer").textContent =
+        flashcards[currentIndex].answer;
+
+    document.getElementById("answer").style.display = "none";
+}
+
+function toggleAnswer() {
+    const answer = document.getElementById("answer");
+
+    if (answer.style.display === "none") {
+        answer.style.display = "block";
+    } else {
+        answer.style.display = "none";
+    }
+}
+
+function nextCard() {
+    if (currentIndex < flashcards.length - 1) {
+        currentIndex++;
+        displayCard();
+    }
+}
+
+function previousCard() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        displayCard();
+    }
+}
+
+function addCard() {
+    const question = document.getElementById("newQuestion").value.trim();
+    const answer = document.getElementById("newAnswer").value.trim();
+
+    if (question && answer) {
+        flashcards.push({ question, answer });
+
+        document.getElementById("newQuestion").value = "";
+        document.getElementById("newAnswer").value = "";
+
+        alert("Flashcard added!");
+    } else {
+        alert("Please enter both question and answer.");
+    }
+}
+
+function editCard() {
+    const question = document.getElementById("newQuestion").value.trim();
+    const answer = document.getElementById("newAnswer").value.trim();
+
+    if (question && answer) {
+        flashcards[currentIndex] = { question, answer };
+        displayCard();
+
+        document.getElementById("newQuestion").value = "";
+        document.getElementById("newAnswer").value = "";
+
+        alert("Flashcard updated!");
+    } else {
+        alert("Enter updated question and answer.");
+    }
+}
+
+function deleteCard() {
+    if (flashcards.length === 1) {
+        alert("At least one flashcard must remain.");
+        return;
+    }
+
+    flashcards.splice(currentIndex, 1);
+
+    if (currentIndex >= flashcards.length) {
+        currentIndex = flashcards.length - 1;
+    }
+
+    displayCard();
+    alert("Flashcard deleted!");
+}
+
+displayCard();
+</script>
+
+</body>
+</html>
+* Responsive, clean UI with minimal styling
+* Client-side storage in memory (can be enhanced with Local Storage if you want persistence after page refresh)
