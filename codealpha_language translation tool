@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 100px;
+            padding: 10px;
+        }
+
+        select, button {
+            margin: 10px;
+            padding: 8px;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Language Translation Tool</h2>
+
+    <textarea id="inputText" placeholder="Enter text"></textarea>
+    <br>
+
+    <select id="sourceLang">
+        <option value="en">English</option>
+        <option value="te">Telugu</option>
+        <option value="hi">Hindi</option>
+        <option value="fr">French</option>
+    </select>
+
+    <select id="targetLang">
+        <option value="te">Telugu</option>
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="fr">French</option>
+    </select>
+
+    <br>
+
+    <button onclick="translateText()">Translate</button>
+
+    <div id="output"></div>
+
+    <script>
+        async function translateText() {
+            let text = document.getElementById("inputText").value;
+            let source = document.getElementById("sourceLang").value;
+            let target = document.getElementById("targetLang").value;
+
+            let url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${source}|${target}`;
+
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+
+                document.getElementById("output").innerText =
+                    data.responseData.translatedText;
+            } catch (error) {
+                document.getElementById("output").innerText =
+                    "Translation failed!";
+            }
+        }
+    </script>
+
+</body>
+</html>
