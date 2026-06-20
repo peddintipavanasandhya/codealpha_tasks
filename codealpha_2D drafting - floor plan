@@ -1,0 +1,49 @@
+import turtle
+
+screen = turtle.Screen()
+screen.title("2D Residential House Floor Plan")
+
+t = turtle.Turtle()
+t.speed(0)
+t.pensize(3)
+
+def rectangle(x, y, w, h, label):
+    t.penup()
+    t.goto(x, y)
+    t.pendown()
+
+    for _ in range(2):
+        t.forward(w)
+        t.left(90)
+        t.forward(h)
+        t.left(90)
+
+    t.penup()
+    t.goto(x + w/4, y + h/2)
+    t.write(label, font=("Arial", 10, "bold"))
+
+# Outer boundary
+rectangle(-250, -150, 500, 300, "")
+
+# Living Room
+rectangle(-250, 0, 500, 150, "LIVING ROOM\n5m x 4m")
+
+# Bedroom 1
+rectangle(-250, -75, 200, 75, "BEDROOM 1\n4m x 4m")
+
+# Bedroom 2
+rectangle(-50, -75, 180, 75, "BEDROOM 2\n4m x 3.5m")
+
+# Bathroom
+rectangle(130, -75, 120, 75, "BATHROOM\n2m x 2m")
+
+# Kitchen
+rectangle(-250, -150, 500, 75, "KITCHEN\n3m x 3m")
+
+# Main Entrance
+t.penup()
+t.goto(-30, -165)
+t.write("MAIN ENTRANCE", font=("Arial", 12, "bold"))
+
+t.hideturtle()
+screen.mainloop()
