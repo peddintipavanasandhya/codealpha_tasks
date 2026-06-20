@@ -1,0 +1,27 @@
+from vpython import *
+
+scene.title = "3D Staircase Model"
+
+step_length = 4
+step_width = 8
+step_height = 1
+num_steps = 10
+
+for i in range(num_steps):
+    box(
+        pos=vector(i * step_length/2,
+                   i * step_height/2,
+                   0),
+        size=vector(step_length,
+                    step_height,
+                    step_width)
+    )
+
+# Floor
+box(pos=vector(10, -1, 0),
+    size=vector(30, 1, 12))
+
+# Light
+local_light(pos=vector(20, 20, 20))
+
+scene.background = color.white
