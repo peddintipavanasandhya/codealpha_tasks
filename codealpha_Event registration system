@@ -1,0 +1,31 @@
+from django.http import JsonResponse
+from .models import Event, Registration
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+def event_list(request):
+    events = list(Event.objects.values())
+    return JsonResponse(events, safe=False)
+
+def event_detail(request, event_id):
+    event = Event.objects.get(id=event_id)
+    return JsonResponse({
+        "id": event.id,
+        "title": event.title,
+        "description": event.description,
+        "date": str(event.date),
+        "location": event.location
+    })
+
+@csrf_exempt
+def register_event(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        Registration.objects.create(
+            name=data["name"],
+            email=data["email"],
+            event_id=data["event_id"]
+        )
+
+        return JsonResponse({"message": "Registration Successful"})
