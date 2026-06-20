@@ -1,0 +1,37 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+# FAQs
+questions = [
+    "What is AI?",
+    "What is Machine Learning?",
+    "What is Python?",
+    "How does a chatbot work?"
+]
+
+answers = [
+    "AI is the simulation of human intelligence by machines.",
+    "Machine Learning is a subset of AI that learns from data.",
+    "Python is a popular programming language.",
+    "A chatbot responds to user queries automatically."
+]
+
+# Convert text to vectors
+vectorizer = TfidfVectorizer()
+faq_vectors = vectorizer.fit_transform(questions)
+
+print("FAQ Chatbot Started (type 'exit' to stop)")
+
+while True:
+    user_query = input("You: ")
+
+    if user_query.lower() == "exit":
+        break
+
+    user_vector = vectorizer.transform([user_query])
+
+    similarity = cosine_similarity(user_vector, faq_vectors)
+
+    best_match = similarity.argmax()
+
+    print("Bot:", answers[best_match])
