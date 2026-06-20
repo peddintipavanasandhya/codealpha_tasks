@@ -1,0 +1,75 @@
+import turtle
+
+screen = turtle.Screen()
+screen.title("2D Mechanical Drawing - Flange")
+
+t = turtle.Turtle()
+t.speed(0)
+
+# Function to draw circle
+def draw_circle(x, y, r):
+    t.penup()
+    t.goto(x, y - r)
+    t.pendown()
+    t.circle(r)
+
+# -------------------
+# TOP VIEW
+# -------------------
+draw_circle(-200, 100, 60)   # Outer circle
+draw_circle(-200, 100, 20)   # Inner hole
+
+# Bolt holes
+for dx, dy in [(40,0),(-40,0),(0,40),(0,-40)]:
+    draw_circle(-200+dx, 100+dy, 5)
+
+t.penup()
+t.goto(-240, 180)
+t.write("TOP VIEW", font=("Arial", 10, "bold"))
+
+# -------------------
+# FRONT VIEW
+# -------------------
+t.penup()
+t.goto(50, 40)
+t.pendown()
+
+for _ in range(2):
+    t.forward(120)
+    t.left(90)
+    t.forward(60)
+    t.left(90)
+
+t.penup()
+t.goto(90, 70)
+t.pendown()
+
+for _ in range(2):
+    t.forward(40)
+    t.left(90)
+    t.forward(20)
+    t.left(90)
+
+t.penup()
+t.goto(70, 120)
+t.write("FRONT VIEW", font=("Arial", 10, "bold"))
+
+# -------------------
+# SIDE VIEW
+# -------------------
+t.penup()
+t.goto(250, 40)
+t.pendown()
+
+for _ in range(2):
+    t.forward(60)
+    t.left(90)
+    t.forward(120)
+    t.left(90)
+
+t.penup()
+t.goto(240, 170)
+t.write("SIDE VIEW", font=("Arial", 10, "bold"))
+
+t.hideturtle()
+screen.mainloop()
