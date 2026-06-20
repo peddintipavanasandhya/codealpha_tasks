@@ -1,0 +1,50 @@
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import MenuItem, Order, Table, Reservation
+import json
+
+def menu_list(request):
+    menu = list(MenuItem.objects.values())
+    return JsonResponse(menu, safe=False)
+
+@csrf_exempt
+def place_order(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        item = MenuItem.objects.get(id=data["item_id"])
+
+        if item.stock >= data["quantity"]:
+            Order.objects.create(
+                customer_name=data["customer_name"],
+                item=item,
+                quantity=data["quantity"]
+            )
+
+            item.stock -= data["quantity"]
+            item.save()
+
+            return JsonResponse({"message": "Order Placed"})
+        else:
+            return JsonResponse({"message": "Insufficient Stock"})
+
+@csrf_exempt
+def reserve_table(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        table = Table.objects.get(id=data["table_id"])
+
+        if table.available:
+            Reservation.objects.create(
+                customer_name=data["customer_name"],
+                table=table,
+                reservation_date=data["reservation_date"]
+            )
+
+            table.available = False
+            table.save()
+
+            return JsonResponse({"message": "Table Reserved"})
+        else:
+            return JsonResponse({"message": "Table Not Available"})
