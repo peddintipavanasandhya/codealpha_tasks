@@ -1,0 +1,43 @@
+from Bio import Entrez, SeqIO
+from Bio.Blast import NCBIWWW, NCBIXML
+
+# Enter your email (required by NCBI)
+Entrez.email = "your_email@example.com"
+
+# Download a DNA sequence from NCBI
+accession_id = "NM_001126112"   # Example accession number
+
+handle = Entrez.efetch(db="nucleotide",
+                       id=accession_id,
+                       rettype="fasta",
+                       retmode="text")
+
+record = SeqIO.read(handle, "fasta")
+handle.close()
+
+print("Sequence ID:", record.id)
+print("Sequence Length:", len(record.seq))
+
+# Run BLAST search
+print("Running BLAST...")
+result_handle = NCBIWWW.qblast("blastn", "nt", record.seq)
+
+# Save BLAST result
+with open("blast_result.xml", "w") as out_file:
+    out_file.write(result_handle.read())
+
+result_handle.close()
+
+# Read BLAST results
+with open("blast_result.xml") as result_file:
+    blast_record = NCBIXML.read(result_file)
+
+print("\nTop 5 BLAST Hits:")
+for alignment in blast_record.alignments[:5]:
+    for hsp in alignment.hsps[:1]:
+        print("Title:", alignment.title)
+        print("Length:", alignment.length)
+        print("Score:", hsp.score)
+        print("Identity:", hsp.identities)
+        print("E-value:", hsp.expect)
+        print("-" * 50)
