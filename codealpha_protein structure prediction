@@ -1,0 +1,25 @@
+from Bio import ExPASy
+from Bio import SwissProt
+from Bio import SeqIO
+
+# Enter a UniProt accession ID
+uniprot_id = "P69905"   # Human Hemoglobin subunit alpha
+
+# Download UniProt record
+handle = ExPASy.get_sprot_raw(uniprot_id)
+record = SwissProt.read(handle)
+
+# Display protein information
+print("Protein Name :", record.description)
+print("Organism     :", record.organism)
+print("Sequence Length :", len(record.sequence))
+print("\nProtein Sequence:\n")
+print(record.sequence)
+
+# Save sequence as FASTA
+with open("protein_sequence.fasta", "w") as file:
+    file.write(f">{uniprot_id} {record.description}\n")
+    file.write(record.sequence)
+
+print("\nFASTA file saved as 'protein_sequence.fasta'")
+print("Upload this FASTA file to SWISS-MODEL or AlphaFold DB for 3D structure prediction.")
