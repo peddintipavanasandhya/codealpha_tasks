@@ -1,0 +1,60 @@
+print("=" * 60)
+print(" RECENT ADVANCEMENTS IN BIOTECHNOLOGY ")
+print("=" * 60)
+
+topics = {
+    "1": {
+        "name": "Genetic Engineering",
+        "details": [
+            "CRISPR-Cas9 Gene Editing",
+            "Gene Therapy",
+            "Base Editing",
+            "Prime Editing"
+        ]
+    },
+    "2": {
+        "name": "Industrial Biotechnology",
+        "details": [
+            "Biofuels",
+            "Industrial Enzymes",
+            "Bioplastics",
+            "Waste Management"
+        ]
+    },
+    "3": {
+        "name": "Agricultural Biotechnology",
+        "details": [
+            "GM Crops",
+            "Biofertilizers",
+            "Pest Resistant Plants",
+            "Drought Tolerant Crops"
+        ]
+    },
+    "4": {
+        "name": "Medical Biotechnology",
+        "details": [
+            "mRNA Vaccines",
+            "Stem Cell Therapy",
+            "Cancer Immunotherapy",
+            "Molecular Diagnostics"
+        ]
+    }
+}
+
+print("\nSelect a Topic")
+print("1. Genetic Engineering")
+print("2. Industrial Biotechnology")
+print("3. Agricultural Biotechnology")
+print("4. Medical Biotechnology")
+
+choice = input("\nEnter your choice (1-4): ")
+
+if choice in topics:
+    print("\nTopic:", topics[choice]["name"])
+    print("\nRecent Advancements:")
+    for item in topics[choice]["details"]:
+        print("-", item)
+else:
+    print("Invalid Choice!")
+
+print("\nThank You!")
