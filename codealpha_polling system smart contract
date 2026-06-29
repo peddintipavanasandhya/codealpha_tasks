@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract PollingSystem {
+
+    struct Poll {
+        string title;
+        string[] options;
+        uint256[] voteCounts;
+        uint256 endTime;
+        bool exists;
+    }
+
+    Poll public poll;
+    mapping(address => bool) public hasVoted;
+
+    // Create a new poll
+    function createPoll(
+        string memory _title,
+        string[] memory _options,
+        uint256 durationInMinutes
+    ) public {
+        require(!poll.exists, "Poll already exists");
+
+        poll.title = _title;
+        poll.endTime = block.timestamp + (durationInMinutes * 1 minutes);
+        poll.exists = true;
+
+        for (uint i = 0; i < _options.length; i++) {
+            poll.options.push(_options[i]);
+            poll.voteCounts.push(0);
+        }
+    }
+
+    // Vote only once
+    function vote(uint optionIndex) public {
+        require(poll.exists, "Poll not created");
+        require(block.timestamp < poll.endTime, "Voting ended");
+        require(!hasVoted[msg.sender], "Already voted");
+        require(optionIndex < poll.options.length, "Invalid option");
+
+        poll.voteCounts[optionIndex]++;
+        hasVoted[msg.sender] = true;
+    }
+
+    // Get winning option
+    function getWinner() public view returns (string memory) {
+        require(block.timestamp >= poll.endTime, "Poll still active");
+
+        uint winner = 0;
+
+        for (uint i = 1; i < poll.voteCounts.length; i++) {
+            if (poll.voteCounts[i] > poll.voteCounts[winner]) {
+                winner = i;
+            }
+        }
+
+        return poll.options[winner];
+    }
+
+    // View vote count of an option
+    function getVotes(uint optionIndex) public view returns (uint) {
+        return poll.voteCounts[optionIndex];
+    }
+}
