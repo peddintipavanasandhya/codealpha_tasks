@@ -1,0 +1,38 @@
+# Case Study Analysis - Biocon
+
+company = {
+    "Company": "Biocon Limited",
+    "Founded": 1978,
+    "Founder": "Kiran Mazumdar-Shaw",
+    "Headquarters": "Bengaluru, India",
+    "Innovation": "Biopharmaceuticals and Biosimilars",
+    "Products": [
+        "Insulin",
+        "Monoclonal Antibodies",
+        "Cancer Drugs",
+        "Diabetes Medicines"
+    ],
+    "Applications": [
+        "Diabetes Treatment",
+        "Cancer Therapy",
+        "Autoimmune Diseases"
+    ],
+    "Challenges": [
+        "High Research Cost",
+        "Regulatory Approval",
+        "Global Competition"
+    ],
+    "Market Impact": "One of India's leading biotechnology companies."
+}
+
+print("=" * 50)
+print("CASE STUDY ANALYSIS - BIOCON")
+print("=" * 50)
+
+for key, value in company.items():
+    if isinstance(value, list):
+        print(f"\n{key}:")
+        for item in value:
+            print("-", item)
+    else:
+        print(f"{key}: {value}")
