@@ -1,0 +1,69 @@
+# Market Research Report - SWOT Analysis
+
+company = input("Enter Company Name: ")
+
+strengths = [
+    "Strong Brand Value",
+    "Large Customer Base",
+    "High Product Quality"
+]
+
+weaknesses = [
+    "High Competition",
+    "Expensive Products",
+    "Limited Market in Some Regions"
+]
+
+opportunities = [
+    "Expansion into New Markets",
+    "Growing Online Sales",
+    "Technological Innovation"
+]
+
+threats = [
+    "New Competitors",
+    "Economic Slowdown",
+    "Changing Customer Preferences"
+]
+
+print("\n" + "=" * 50)
+print("MARKET RESEARCH REPORT")
+print("=" * 50)
+
+print("\nCompany:", company)
+
+print("\nSWOT Analysis")
+
+print("\nStrengths:")
+for s in strengths:
+    print("•", s)
+
+print("\nWeaknesses:")
+for w in weaknesses:
+    print("•", w)
+
+print("\nOpportunities:")
+for o in opportunities:
+    print("•", o)
+
+print("\nThreats:")
+for t in threats:
+    print("•", t)
+
+print("\nTarget Audience:")
+print("- Students")
+print("- Working Professionals")
+print("- Families")
+
+print("\nCompetitors:")
+print("- Competitor A")
+print("- Competitor B")
+print("- Competitor C")
+
+print("\nMarket Trends:")
+print("- Digital Marketing")
+print("- E-commerce Growth")
+print("- AI-Based Services")
+print("- Sustainable Products")
+
+print("\nReport Generated Successfully!")
