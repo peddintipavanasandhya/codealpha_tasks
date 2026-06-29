@@ -1,0 +1,23 @@
+print("=" * 50)
+print("DNA EXTRACTION - VIRTUAL SIMULATION")
+print("=" * 50)
+
+steps = [
+    "1. Collect banana or strawberry sample.",
+    "2. Crush the sample thoroughly.",
+    "3. Add detergent and salt solution.",
+    "4. Mix gently for 5 minutes.",
+    "5. Filter the mixture.",
+    "6. Add cold alcohol slowly.",
+    "7. White DNA strands become visible."
+]
+
+print("\nProcedure:")
+for step in steps:
+    print(step)
+
+print("\nObservation:")
+print("White thread-like DNA appears in the alcohol layer.")
+
+print("\nConclusion:")
+print("DNA was successfully extracted from the fruit sample.")
