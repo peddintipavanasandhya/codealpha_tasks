@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract MultiSend {
+
+    // Send equal Ether to multiple recipients
+    function sendEther(address payable[] calldata recipients) external payable {
+        require(recipients.length > 0, "No recipients");
+
+        uint256 amountPerPerson = msg.value / recipients.length;
+        require(amountPerPerson > 0, "Insufficient Ether");
+
+        for (uint256 i = 0; i < recipients.length; i++) {
+            (bool success, ) = recipients[i].call{value: amountPerPerson}("");
+            require(success, "Transfer failed");
+        }
+    }
+
+    // Check contract balance
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    receive() external payable {}
+}
