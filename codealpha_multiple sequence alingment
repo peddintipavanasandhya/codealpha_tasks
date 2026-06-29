@@ -1,0 +1,36 @@
+from Bio.Align.Applications import ClustalOmegaCommandline
+from Bio import AlignIO
+import os
+
+# Input and output files
+input_file = "protein_sequences.fasta"
+output_file = "aligned_sequences.aln"
+
+# Path to Clustal Omega executable
+clustalomega_exe = "clustalo"   # Change this if Clustal Omega is installed elsewhere
+
+# Run Clustal Omega
+clustalomega_cline = ClustalOmegaCommandline(
+    cmd=clustalomega_exe,
+    infile=input_file,
+    outfile=output_file,
+    verbose=True,
+    auto=True,
+    force=True
+)
+
+stdout, stderr = clustalomega_cline()
+
+# Read and display alignment
+alignment = AlignIO.read(output_file, "clustal")
+
+print("Multiple Sequence Alignment:\n")
+print(alignment)
+
+# Save alignment in FASTA format
+AlignIO.write(alignment, "aligned_sequences.fasta", "fasta")
+
+print("\nAlignment completed successfully!")
+print("Output files:")
+print("1. aligned_sequences.aln")
+print("2. aligned_sequences.fasta")
